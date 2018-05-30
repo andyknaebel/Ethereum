@@ -7,7 +7,7 @@
 # employee as firsname.lastname@email.com
 #  
 # The def __repr__(self) returns the string "Employee then all the employee attributes"
-#
+# dummy comment
 
 
 class Employee:
