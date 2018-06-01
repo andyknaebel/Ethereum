@@ -1,27 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 import requests
-from .forms import GetDataForm, cryptoForm, blockForm
+from .forms import GetDataForm, cryptoForm
 from django.views.generic import TemplateView
-from django.urls import reverse
-
-class Blocks(TemplateView):
-    Template_name = 'api_web/Blocks.html'
-
-    def get(self, request):
-        form = blockForm()
-        args =  { 'Title' : 'Block Get Request', 'form' : form}  
-        return render(request, self.Template_name, args )
-
-    def post(self, request):
-        form = blockForm(request.POST)
-        if form.is_valid():
-            element = form.cleaned_data['Block']
-            response = requests.get('https://api.blockcypher.com/v1/eth/main/blocks/%s' %(element))
-            Block = response.json()
-            args =  {'Title' : 'Block Post Request', 'form' : form, 'Block' : Block}   
-        return render(request, self.Template_name, args )
-
 
 class Ethereum(TemplateView):
     Template_name = 'api_web/Ethereum.html'

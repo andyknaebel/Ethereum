@@ -3,13 +3,13 @@
 <div class="container">
     <form method="POST">
         {% csrf_token %}
-        {{form}}
+      {{form}}
         <button type="submit">submit</button>
+      {{Block}}
+      <br>
+        {{newnonce}}
+        <br>
+        {{othernonce}}
     </form>
-    {{element}} {{price}} 
-    <br>
-    <h3>Last Block: {{lastblock}}</h3>  
-    <br>
-    <h3>Current Probability: {{ probability }}</h3>
 </div>
 {% endblock %}
