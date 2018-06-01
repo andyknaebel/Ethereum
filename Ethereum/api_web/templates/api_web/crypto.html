@@ -1,0 +1,15 @@
+{% extends "api_web/base.html" %}
+{% block content %}
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit">submit</button>
+    </form>
+    {{element}} {{price}} 
+    <br>
+    <h3>Last Block: {{lastblock}}</h3>  
+    <br>
+    <h3>Current Probability: {{ probability }}</h3>
+</div>
+{% endblock %}
