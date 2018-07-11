@@ -3,9 +3,9 @@
 <div class="container">
     <form method="POST">
         {% csrf_token %}
-      {{message}}
-        <button type="submit">submit</button>
         {{lastblock}}
-          </form>
+        <button type="submit">submit</button>
+        {{message}}
+    </form>
 </div>
 {% endblock %}

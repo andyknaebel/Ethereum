@@ -1,10 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 import requests
+import blockcypher
+#from blockcypher import get_blockchain_overview
 from .forms import GetDataForm, cryptoForm, blockForm
 from django.views.generic import TemplateView
 from django.urls import reverse
 
+
+#good working example of requesting form input, in this case a ethereum block number
+#then passing that in a post back to the page and using the block number to query the 
+#blockcypher api for information about the block.
 class Blocks(TemplateView):
     Template_name = 'api_web/Blocks.html'
 
@@ -28,16 +34,20 @@ class Ethereum(TemplateView):
 
     def get(self, request):
         main = requests.get('https://api.blockcypher.com/v1/eth/main')
-        message = main.json()['height']
+        lastblock = main.json()['height']
         detail = requests.get(main.json()['latest_url'])
-        lastblock = detail.json()
-        args =  {'lastblock' : lastblock, 'Title' : 'Get Request', 'message' : message}  
+        message = detail.json()
+        args =  {'lastblock' : lastblock, 'Title' : 'Ethereum Lastblock Get Request', 'message' : message}  
         return render(request, self.Template_name, args )
 
     def post(self, request):
         args =  {'Title' : 'Post Request'}   
         return render(request, self.Template_name, args )
 
+
+#below is a good working example of taking an input, in this case a coin - BTC works -
+#then passing form collected data via post and rendering a html file
+#after running a number of api / rest calls to get more information
 class crypto(TemplateView):
     Template_name = 'api_web/crypto.html'
 
@@ -83,6 +93,22 @@ class api_getone(TemplateView):
             text = form.cleaned_data['employeeID']
 
         args =  {'form' : form, 'text' : text }   
+        return render(request, self.Template_name, args )
+
+
+class Ethereumback(TemplateView):
+    Template_name = 'api_web/Ethereum.html'
+
+    def get(self, request):
+        main = requests.get('https://api.blockcypher.com/v1/eth/main')
+        message = main.json()['height']
+        detail = requests.get(main.json()['latest_url'])
+        lastblock = detail.json()
+        args =  {'lastblock' : lastblock, 'Title' : 'Get Request', 'message' : message}  
+        return render(request, self.Template_name, args )
+
+    def post(self, request):
+        args =  {'Title' : 'Post Request'}   
         return render(request, self.Template_name, args )
 
 
